@@ -13,6 +13,7 @@ users.json
 .DS_Store
 .vscode/
 .idea/
+<<<<<<< HEAD
 
 # GitHub Pages / Jekyll
 _site/
@@ -21,3 +22,8 @@ _site/
 .jekyll-metadata
 /vendor
 Gemfile.lock
+=======
+__pycache__/
+*.pyc
+*.bak
+>>>>>>> 5043687 (Ignore generated files)
