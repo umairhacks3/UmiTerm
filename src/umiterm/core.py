@@ -1,8 +1,9 @@
 from .shell import UmiShell
 from .users import UserManager
+from .packages import PackageManager
 
 
-VERSION = "0.3"
+VERSION = "0.4"
 
 
 class UmiTerm:
@@ -10,11 +11,11 @@ class UmiTerm:
     def __init__(self):
         self.shell = UmiShell()
         self.users = UserManager()
+        self.packages = PackageManager()
 
     def show_banner(self):
-
         print("=" * 50)
-        print("         UmiTerm v0.3")
+        print("         UmiTerm v0.4")
         print("   UmiTerm Terminal Environment")
         print("=" * 50)
         print("Type 'help' for commands.")
@@ -25,34 +26,60 @@ class UmiTerm:
 
         parts = command.split()
 
-        # -------------------------
-        # Umi commands
-        # -------------------------
+        if not parts:
+            return
 
-        if parts and parts[0] == "umi":
+        # Umi commands
+        if parts[0] == "umi":
 
             if len(parts) == 2 and parts[1] == "version":
                 print(f"UmiTerm v{VERSION}")
                 return
 
-            if len(parts) == 3 and parts[1] == "user" and parts[2] == "list":
-                self.users.list_users()
+            # User commands
+            if len(parts) == 3 and parts[1] == "user":
+
+                if parts[2] == "list":
+                    self.users.list_users()
+                    return
+
+            if len(parts) == 4 and parts[1] == "user":
+
+                if parts[2] == "create":
+                    self.users.create_user(parts[3])
+                    return
+
+            # Package commands
+            if len(parts) == 2 and parts[1] == "list":
+                self.packages.list_packages()
                 return
 
-            if len(parts) == 4 and parts[1] == "user" and parts[2] == "create":
-                self.users.create_user(parts[3])
+            if len(parts) == 3 and parts[1] == "search":
+                self.packages.search(parts[2])
+                return
+
+            if len(parts) == 3 and parts[1] == "install":
+                self.packages.install(parts[2])
                 return
 
             print("Unknown Umi command.")
-            print("Try: umi version")
-            print("     umi user list")
-            print("     umi user create <username>")
+            print()
+            print("Available commands:")
+            print("  umi version")
+            print("  umi user list")
+            print("  umi user create <username>")
+            print("  umi list")
+            print("  umi search <package>")
+            print("  umi install <package>")
             return
 
-        # -------------------------
-        # Normal shell commands
-        # -------------------------
+        # Exit
+        if command == "exit":
+            self.shell.running = False
+            print("Goodbye!")
+            return
 
+        # Normal Linux commands
         self.shell.execute(command)
 
     def start(self):
@@ -62,21 +89,15 @@ class UmiTerm:
         while self.shell.running:
 
             try:
-
                 command = input(
                     self.shell.show_prompt()
                 ).strip()
 
-                if not command:
-                    continue
-
                 self.handle_command(command)
 
             except KeyboardInterrupt:
-
                 print("\nUse 'exit' to quit.")
 
             except EOFError:
-
                 print("\nGoodbye!")
                 break

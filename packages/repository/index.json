@@ -1,0 +1,14 @@
+{
+    "hello": {
+        "version": "1.0.0",
+        "description": "A simple UmiTerm example package"
+    },
+    "umigit": {
+        "version": "1.0.0",
+        "description": "Git helper tools for UmiTerm"
+    },
+    "umicli": {
+        "version": "1.0.0",
+        "description": "Useful command-line utilities for UmiTerm"
+    }
+}
