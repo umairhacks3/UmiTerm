@@ -14,12 +14,15 @@ class UmiTerm:
         self.packages = PackageManager()
 
     def show_banner(self):
-        print("=" * 50)
-        print("         UmiTerm v0.4")
-        print("   UmiTerm Terminal Environment")
-        print("=" * 50)
-        print("Type 'help' for commands.")
-        print("Type 'exit' to quit.")
+        print("=" * 58)
+        print("              UmiTerm v0.4")
+        print("          UmiTerm Terminal Environment")
+        print("=" * 58)
+        print()
+        print("          ★ Welcome to UMI Term ★")
+        print("             Developed by Umair")
+        print()
+        print("      Type 'help' to see available commands.")
         print()
 
     def handle_command(self, command):
